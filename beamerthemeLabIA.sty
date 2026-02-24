@@ -1,0 +1,176 @@
+\ProvidesPackage{beamerthemeLabIA}[2026/02/01]
+
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{etoolbox}
+\RequirePackage{ifxetex}
+\usetikzlibrary{calc}
+
+% ===== Opções =====
+
+% A numeração da página deve aparecer na página de título (padrão: false)
+\newbool{titlepagenumber}
+\setbool{titlepagenumber}{false}
+
+% As páginas devem ser numeradas (padrão: true)
+\newbool{pagenumber}
+\setbool{pagenumber}{true}
+
+\DeclareOptionBeamer{notitlepage}{\setbool{titlepage}{false}}
+\DeclareOptionBeamer{titlepagenumber}{\setbool{titlepagenumber}{true}}
+\DeclareOptionBeamer{nopagenumber}{\setbool{pagenumber}{false}}
+\ProcessOptionsBeamer
+
+% ===== Definições =====
+
+\setbeamertemplate{navigation symbols}{}
+\newlength{\sidebarwidth}
+\setlength{\sidebarwidth}{15mm}
+\setlength{\sidebarheight}{0cm}
+\newcommand{\sidebarimage}{logo.pdf}
+\newcommand{\fmtpage}[2]{\makebox[1.5em][#1]{#2}}
+\definecolor{LabIAblue}{RGB}{62,81,149}
+
+% ===== Barra lateral =====
+
+\setbeamertemplate{background}{
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[LabIAblue] % Barra lateral
+        ($(current page.north east)+(-\sidebarwidth,0)$)
+        rectangle
+        (current page.south east);
+
+    \draw[white, line width=0.5mm] % Linha central da barra lateral
+        ($(current page.north east)+(-0.5*\sidebarwidth,-23mm)$)
+        --
+        ($(current page.south east)+(-0.5*\sidebarwidth,2mm)$);
+    
+    \node[anchor=north east, inner sep=0pt] % Logo do LabIA
+        at (current page.north east)
+        {\includegraphics[width=\sidebarwidth]{\sidebarimage}};
+    
+    \ifboolexpr{ % Numeração de página
+        bool {pagenumber}
+        and
+        ( bool {titlepagenumber}
+        or
+        test {\ifnumcomp{\value{page}}{>}{1}} )
+    }{
+        \node[
+            anchor=south,
+            text=white,
+            fill=LabIAblue,
+            font=\small
+        ] at ($(current page.south east)+(-0.5*\sidebarwidth,0)$)
+        {\fmtpage{r}{\insertframenumber}/\fmtpage{l}{\inserttotalframenumber}};
+    }{}
+\end{tikzpicture}
+}
+\setbeamersize{
+    text margin right=\dimexpr\sidebarwidth+0.5cm\relax
+}
+
+% ===== Página de título =====
+
+\def\ps@nav@titlepage{
+    \setbeamercolor{background canvas}{bg=LabIAblue}
+    \@nameuse{ps@nav}
+}
+\setbeamertemplate{title page}{
+    \thispagestyle{nav@titlepage}
+
+    \begingroup
+
+    % Cores das fontes
+    \setbeamercolor{title}{fg=white}
+    \setbeamercolor{subtitle}{fg=white}
+    \setbeamercolor{author}{fg=white}
+    \setbeamercolor{institute}{fg=white}
+    \setbeamercolor{date}{fg=white}
+
+    % Tamanho das fontes
+    \setbeamerfont{title}{size=\huge,series=\bfseries}
+    \setbeamerfont{subtitle}{size=\Large,series=\mdseries}
+    \setbeamerfont{author}{size=\large}
+    \setbeamerfont{institute}{size=\small}
+    \setbeamerfont{date}{size=\small}
+
+    % Layout da página
+    \begin{center}
+        % TÍTULO
+        {\usebeamerfont{title}%
+         \usebeamercolor[fg]{title}%
+         \inserttitle\par}
+        
+        % SUBTÍTULO (somente se existir)
+        \ifx\insertsubtitle\@empty\else
+            \vspace{1em}
+            {\usebeamerfont{subtitle}%
+             \usebeamercolor[fg]{subtitle}%
+             \insertsubtitle\par}
+        \fi
+        
+        % ESPAÇO ANTES DA LINHA
+        \vspace{1.2em}
+        
+        % LINHA HORIZONTAL
+        \begin{tikzpicture}
+        \draw[white,line width=1mm]
+            (0,0) -- (0.2\paperwidth,0);
+        \end{tikzpicture}
+        
+        \vspace{1.2em}
+        
+        % AUTOR
+        {\usebeamerfont{author}%
+        \usebeamercolor[fg]{author}%
+        \insertauthor\par}
+        
+        % INSTITUTO (somente se existir)
+        \ifx\insertinstitute\@empty\else
+            \vspace{1em}
+            {\usebeamerfont{institute}%
+             \usebeamercolor[fg]{institute}%
+             \insertinstitute\par}
+        \fi
+        
+        % DATA (somente se existir)
+        \ifx\insertdate\@empty\else
+            \vspace{1em}
+            {\usebeamerfont{date}%
+             \usebeamercolor[fg]{date}%
+             \insertdate\par}
+        \fi
+    \end{center}
+
+    \endgroup
+}
+
+% Definir fontes
+\newcommand{\@setfont}{
+    \RequirePackage{fontspec}
+    \IfFontExistsTF{Arial}{
+        \setmainfont{Arial}
+        \setsansfont{Arial}
+    }{
+        \IfFontExistsTF{Liberation Sans}{
+            \setmainfont{Liberation Sans}
+            \setsansfont{Liberation Sans}
+        }{
+            \renewcommand{\familydefault}{phv}
+        }
+    }
+}
+
+\ifxetex
+    \@setfont
+\else
+    \RequirePackage{ifluatex}
+    \ifLuaTeX
+        \@setfont
+    \else
+        \RequirePackage[utf8]{inputenc}
+        \RequirePackage[T1]{fontenc}
+        \renewcommand{\familydefault}{phv}
+    \fi
+\fi
