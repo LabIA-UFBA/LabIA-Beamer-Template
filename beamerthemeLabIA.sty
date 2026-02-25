@@ -16,7 +16,6 @@
 \newbool{pagenumber}
 \setbool{pagenumber}{true}
 
-\DeclareOptionBeamer{notitlepage}{\setbool{titlepage}{false}}
 \DeclareOptionBeamer{titlepagenumber}{\setbool{titlepagenumber}{true}}
 \DeclareOptionBeamer{nopagenumber}{\setbool{pagenumber}{false}}
 \ProcessOptionsBeamer
@@ -26,7 +25,6 @@
 \setbeamertemplate{navigation symbols}{}
 \newlength{\sidebarwidth}
 \setlength{\sidebarwidth}{15mm}
-\setlength{\sidebarheight}{0cm}
 \newcommand{\sidebarimage}{logo.pdf}
 \newcommand{\fmtpage}[2]{\makebox[1.5em][#1]{#2}}
 \definecolor{LabIAblue}{RGB}{62,81,149}
@@ -60,14 +58,18 @@
             anchor=south,
             text=white,
             fill=LabIAblue,
+            inner ysep=2mm,
             font=\small
         ] at ($(current page.south east)+(-0.5*\sidebarwidth,0)$)
         {\fmtpage{r}{\insertframenumber}/\fmtpage{l}{\inserttotalframenumber}};
     }{}
 \end{tikzpicture}
 }
+
+% Ajustar conteúdo com a barra lateral (apenas em slides não-titlepage)
 \setbeamersize{
-    text margin right=\dimexpr\sidebarwidth+0.5cm\relax
+    text margin right=\dimexpr\sidebarwidth+0.5cm\relax,
+    text margin left=7mm
 }
 
 % ===== Página de título =====
@@ -97,56 +99,118 @@
 
     % Layout da página
     \begin{center}
-        % TÍTULO
-        {\usebeamerfont{title}%
-         \usebeamercolor[fg]{title}%
-         \inserttitle\par}
-        
-        % SUBTÍTULO (somente se existir)
-        \ifx\insertsubtitle\@empty\else
-            \vspace{1em}
-            {\usebeamerfont{subtitle}%
-             \usebeamercolor[fg]{subtitle}%
-             \insertsubtitle\par}
-        \fi
-        
-        % ESPAÇO ANTES DA LINHA
-        \vspace{1.2em}
-        
-        % LINHA HORIZONTAL
-        \begin{tikzpicture}
-        \draw[white,line width=1mm]
-            (0,0) -- (0.2\paperwidth,0);
-        \end{tikzpicture}
-        
-        \vspace{1.2em}
-        
-        % AUTOR
-        {\usebeamerfont{author}%
-        \usebeamercolor[fg]{author}%
-        \insertauthor\par}
-        
-        % INSTITUTO (somente se existir)
-        \ifx\insertinstitute\@empty\else
-            \vspace{1em}
-            {\usebeamerfont{institute}%
-             \usebeamercolor[fg]{institute}%
-             \insertinstitute\par}
-        \fi
-        
-        % DATA (somente se existir)
-        \ifx\insertdate\@empty\else
-            \vspace{1em}
-            {\usebeamerfont{date}%
-             \usebeamercolor[fg]{date}%
-             \insertdate\par}
-        \fi
+        \hspace*{\dimexpr(\sidebarwidth+0.5cm)/2\relax}%
+        \begin{minipage}{0.75\paperwidth}
+            \centering
+            % TÍTULO
+            {\usebeamerfont{title}%
+            \usebeamercolor[fg]{title}%
+            \inserttitle\par}
+            
+            % SUBTÍTULO (se existir)
+            \ifx\insertsubtitle\@empty\else
+                \vspace{1em}
+                {\usebeamerfont{subtitle}%
+                \usebeamercolor[fg]{subtitle}%
+                \insertsubtitle\par}
+            \fi
+            
+            % ESPAÇO ANTES DA LINHA
+            \vspace{1.5em}
+            
+            % LINHA HORIZONTAL
+            \begin{tikzpicture}
+            \draw[white,line width=1mm]
+                (0,0) -- (0.2\paperwidth,0);
+            \end{tikzpicture}
+            
+            \vspace{1.5em}
+            
+            % AUTOR (se existir)
+            \ifx\insertauthor\@empty\else
+                {\usebeamerfont{author}%
+                \usebeamercolor[fg]{author}%
+                \insertauthor\par}
+            \fi
+            
+            % INSTITUTO (se existir)
+            \ifx\insertinstitute\@empty\else
+                \vspace{1em}
+                {\usebeamerfont{institute}%
+                \usebeamercolor[fg]{institute}%
+                \insertinstitute\par}
+            \fi
+            
+            % DATA (se existir)
+            \ifx\insertdate\@empty\else
+                \vspace{1em}
+                {\usebeamerfont{date}%
+                \usebeamercolor[fg]{date}%
+                \insertdate\par}
+            \fi
+        \end{minipage}
     \end{center}
 
     \endgroup
 }
 
-% Definir fontes
+% ===== Título e subtítulo das páginas =====
+
+\setbeamerfont{frametitle}{
+  size=\LARGE,
+  series=\bfseries
+}
+
+\setbeamercolor{frametitle}{
+  fg=LabIAblue
+}
+
+\setbeamerfont{framesubtitle}{
+  size=\normalsize,
+  series=\mdseries
+}
+
+\setbeamercolor{framesubtitle}{
+  fg=LabIAblue
+}
+
+\setbeamertemplate{frametitle}{
+    \vspace*{4mm}%
+    {\usebeamerfont{frametitle}%
+     \usebeamercolor[fg]{frametitle}%
+     \insertframetitle\par}
+    
+    \ifx\insertframesubtitle\@empty\else
+        \vspace{0.2em}
+        {\usebeamerfont{framesubtitle}%
+         \usebeamercolor[fg]{framesubtitle}%
+         \insertframesubtitle\par}
+    \fi
+}
+
+% ===== itemize, enumerate, description e nome das legendas
+
+% itemize
+\setbeamertemplate{itemize item}{\Large$\bullet$}
+\setbeamertemplate{itemize subitem}{\large$\circ$}
+\setbeamertemplate{itemize subsubitem}{\tiny$\blacksquare$}
+\setbeamercolor{itemize item}{fg=LabIAblue}
+\setbeamercolor{itemize subitem}{fg=LabIAblue}
+\setbeamercolor{itemize subsubitem}{fg=LabIAblue}
+
+% enumerate
+\setbeamercolor{enumerate item}{fg=LabIAblue}
+\setbeamercolor{enumerate subitem}{fg=LabIAblue}
+\setbeamercolor{enumerate subsubitem}{fg=LabIAblue}
+
+% description
+\setbeamercolor{description item}{fg=LabIAblue}
+
+% Nome das legendas
+\setbeamercolor{caption name}{fg=LabIAblue}
+
+% ===== Definição das fontes =====
+
 \newcommand{\@setfont}{
     \RequirePackage{fontspec}
     \IfFontExistsTF{Arial}{
