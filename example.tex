@@ -1,6 +1,6 @@
 \documentclass[aspectratio=169]{beamer}
 \usepackage{lipsum}
-\usepackage[brazil]{babel}
+\usepackage[latin,english,brazilian]{babel}
 \usetheme{LabIA}
 
 \title{Exemplo de apresentação}
@@ -48,6 +48,10 @@
         \begin{itemize}
             \item part 1
             \item part 2
+            \begin{itemize}
+                \item subpart 1
+                \item subpart 2
+            \end{itemize}
         \end{itemize}
         \item Point C
         \item Point D \footnote{\lipsum[1][1]}
@@ -55,10 +59,10 @@
 \end{frame}
 
 \begin{frame}
-    \begin{enumerate}[I]
+    \begin{enumerate}
         \item Point A
         \item Point B
-        \begin{enumerate}[i]
+        \begin{enumerate}
             \item part 1
             \item part 2
         \end{enumerate}
@@ -70,9 +74,9 @@
 \begin{frame}
     \frametitle{Using Columns}
     \begin{columns}
-        \column{0.5\textwidth}
+        \column{0.4\textwidth}
         \lipsum[2][1-5]
-        \column{0.5\textwidth}
+        \column{0.4\textwidth}
         \lipsum[3][1-6]
     \end{columns}
 \end{frame}
