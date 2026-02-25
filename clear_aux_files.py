@@ -1,3 +1,4 @@
+from shutil import rmtree
 from glob import glob
 import os
 
@@ -15,3 +16,6 @@ with open('.gitignore') as gi:
         
         for file in glob(line):
             os.remove(file)
+
+
+rmtree("%OUTDIR%", True)
