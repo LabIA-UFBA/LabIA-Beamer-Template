@@ -4,6 +4,7 @@
 \RequirePackage{tikz}
 \RequirePackage{etoolbox}
 \RequirePackage{ifxetex}
+\RequirePackage[svgnames]{xcolor}
 \usetikzlibrary{calc}
 
 % ===== Opções =====
@@ -43,9 +44,9 @@
         --
         ($(current page.south east)+(-0.5*\sidebarwidth,2mm)$);
     
-    \node[anchor=north east, inner sep=0pt] % Logo do LabIA
+    \node[anchor=north east, inner sep=0, xshift=-0.5mm, yshift=-1mm] % Logo do LabIA
         at (current page.north east)
-        {\includegraphics[width=\sidebarwidth]{\sidebarimage}};
+        {\includegraphics[width=\dimexpr\sidebarwidth-1mm\relax]{\sidebarimage}};
     
     \ifboolexpr{ % Numeração de página
         bool {pagenumber}
@@ -188,7 +189,7 @@
     \fi
 }
 
-% ===== itemize, enumerate, description e nome das legendas
+% ===== itemize, enumerate, description e nome das legendas =====
 
 % itemize
 \setbeamertemplate{itemize item}{\Large$\bullet$}
@@ -208,6 +209,21 @@
 
 % Nome das legendas
 \setbeamercolor{caption name}{fg=LabIAblue}
+
+% ===== Blocos =====
+
+\newcommand{\@configblock}[2][]{
+    \setbeamerfont{block title#1}{series=\bfseries}
+    \setbeamercolor{block title#1}{fg=white,bg=#2}
+    \setbeamercolor{block body#1}{fg=black,bg=#2!20}
+}
+\@configblock{LabIAblue}
+\@configblock[ alerted]{FireBrick}
+\@configblock[ example]{Green}
+
+% ===== Botões =====
+
+\setbeamercolor{button}{fg=white,bg=LabIAblue}
 
 % ===== Definição das fontes =====
 
