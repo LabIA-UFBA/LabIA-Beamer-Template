@@ -33,6 +33,7 @@
 
 \section{Section 1}
 \subsection{Subsection a}
+\framesection{Seção 1}{Subseção a}
 
 \begin{frame}
     \frametitle{Title}
@@ -58,6 +59,7 @@
     \end{itemize}
 \end{frame}
 
+\subsubsection{Subsubsection aa}
 \begin{frame}
     \begin{enumerate}
         \item Point A
@@ -71,14 +73,17 @@
     \end{enumerate}
 \end{frame}
 
+\subsection{Subsection b}
+\framesection{}{Subseção b}
+
 \begin{frame}
     \frametitle{Using Columns}
     \label{usingcols}
     \begin{columns}
         \column{0.4\textwidth}
-        \lipsum[2][1-5]
+        \lipsum[2][1-5] \cite{BOSCHINI2022}
         \column{0.4\textwidth}
-        \lipsum[3][1-6]
+        \lipsum[3][1-6] \cite{smith2021}
     \end{columns}
 \end{frame}
 
@@ -86,7 +91,7 @@
     \frametitle{Pictures}
     \begin{figure}
         \includegraphics[height=4cm]{sofrê.jpg}
-        \caption{\textit{Icterus jamacaii}}
+        \caption{\textit{Icterus jamacaii} \cite{wikiaves_corrupiao}}
         \label{image}
     \end{figure}
     \lipsum[4][2-6]
@@ -128,6 +133,10 @@
     \end{example}
 \end{frame}
 
+\section{Section 2}
+
+\framesection
+
 \begin{frame}
     \frametitle{Mathematics}
     \begin{theorem}[Pythagoras] 
@@ -161,6 +170,14 @@
     \hyperlink{acronyms}{\beamergotobutton{acronyms page}}\\
     \hyperlink{image}{\beamerskipbutton{image page}}\\
     \hyperlink{table}{\beamerreturnbutton{table page}}
+\end{frame}
+
+\section{Bibliography}
+\framesection
+
+\begin{frame}{Bibliography}
+    \bibliographystyle{plain}
+    \bibliography{ref}
 \end{frame}
 
 \end{document}

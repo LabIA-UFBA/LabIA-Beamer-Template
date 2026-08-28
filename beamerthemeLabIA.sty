@@ -5,7 +5,9 @@
 \RequirePackage{etoolbox}
 \RequirePackage{ifxetex}
 \RequirePackage[svgnames]{xcolor}
+\RequirePackage{xparse}
 \usetikzlibrary{calc}
+
 
 % ===== Opções =====
 
@@ -21,6 +23,7 @@
 \DeclareOptionBeamer{nopagenumber}{\setbool{pagenumber}{false}}
 \ProcessOptionsBeamer
 
+
 % ===== Definições =====
 
 \setbeamertemplate{navigation symbols}{}
@@ -29,8 +32,16 @@
 \newcommand{\sidebarimage}{logo.pdf}
 \newcommand{\fmtpage}[2]{\makebox[1.5em][#1]{#2}}
 \definecolor{LabIAblue}{RGB}{62,81,149}
+%\definecolor{LabIAblue}{RGB}{255,81,149}
+
 
 % ===== Barra lateral =====
+
+% \newbool{istitlepage}
+% \setbool{istitlepage}{true}
+% \def\settitlepage{\setbool{istitlepage}{false}}
+% \AddToHook{env/frame/begin}{\setbool{istitlepage}{true}}
+% \BeforeBeginEnvironment{frame}{\setbool{istitlepage}{true}}
 
 \setbeamertemplate{background}{
 \begin{tikzpicture}[remember picture,overlay]
@@ -54,6 +65,7 @@
         ( bool {titlepagenumber}
         or
         test {\ifnumcomp{\value{page}}{>}{1}} )
+        %bool {istitlepage} )
     }{
         \node[
             anchor=south,
@@ -72,6 +84,7 @@
     text margin right=\dimexpr\sidebarwidth+0.5cm\relax,
     text margin left=7mm
 }
+
 
 % ===== Página de título =====
 
@@ -92,16 +105,17 @@
     \setbeamercolor{date}{fg=white}
 
     % Tamanho das fontes
-    \setbeamerfont{title}{size=\huge,series=\bfseries}
-    \setbeamerfont{subtitle}{size=\Large,series=\mdseries}
-    \setbeamerfont{author}{size=\large}
-    \setbeamerfont{institute}{size=\small}
-    \setbeamerfont{date}{size=\small}
+    \setbeamerfont{title}{size=\LARGE,series=\bfseries}
+    \setbeamerfont{subtitle}{size=\large,series=\mdseries}
+    \setbeamerfont{author}{size=\normalsize}
+    \setbeamerfont{institute}{size=\footnotesize}
+    \setbeamerfont{date}{size=\footnotesize}
 
     % Layout da página
     \begin{center}
+        %\settitlepage
         \hspace*{\dimexpr(\sidebarwidth+0.5cm)/2\relax}%
-        \begin{minipage}{0.75\paperwidth}
+        \begin{minipage}[c][0.9\paperheight]{0.75\paperwidth}
             \centering
             % TÍTULO
             {\usebeamerfont{title}%
@@ -155,10 +169,58 @@
     \endgroup
 }
 
+
+% ===== Cabeçalho de seção =====
+
+\NewDocumentCommand{\framesection}{g g}{%
+    \IfNoValueTF{#1} {%
+        \def\framesectiontitle{\insertsection}%
+    }{%
+        \IfBlankTF{#1}
+            {\def\framesectiontitle{\insertsection}}
+            {\def\framesectiontitle{#1}}%
+    }%
+    %
+    \IfNoValueTF{#2}
+        {\def\framesectionsubtitle{}}
+        {\def\framesectionsubtitle{#2}}%
+    %
+    {%
+        \setbeamercolor{background canvas}{bg=LabIAblue}
+        \setbeamercolor{title}{fg=white}
+        \setbeamerfont{title}{size=\LARGE}
+        \setbeamerfont{subtitle}{size=\large}
+        
+        \begin{frame}
+            %\settitlepage
+            \begin{center}
+                \hspace*{\dimexpr(\sidebarwidth+0.5cm)/2\relax}%
+                \begin{minipage}[c][0.9\paperheight]{0.75\paperwidth}
+                    \centering
+                    
+                    % Título da seção
+                    {\usebeamerfont{title}%
+                    \usebeamercolor[fg]{title}%
+                    \textbf{\framesectiontitle}\par}
+
+                    % Subtítulo da seção
+                    \ifx\framesectionsubtitle\@empty
+                    \else
+                    {\vspace{1em}\usebeamerfont{subtitle}%
+                    \usebeamercolor[fg]{title}%
+                    \framesectionsubtitle\par}
+                    \fi
+                \end{minipage}
+            \end{center}
+        \end{frame}%
+    }
+}
+
+
 % ===== Título e subtítulo das páginas =====
 
 \setbeamerfont{frametitle}{
-  size=\LARGE,
+  %size=\LARGE,
   series=\bfseries
 }
 
@@ -167,7 +229,7 @@
 }
 
 \setbeamerfont{framesubtitle}{
-  size=\normalsize,
+  %size=\normalsize,
   series=\mdseries
 }
 
@@ -189,7 +251,8 @@
     \fi
 }
 
-% ===== itemize, enumerate, description e nome das legendas =====
+
+% ===== itemize, enumerate, description, tableofcontents e nome das legendas =====
 
 % itemize
 \setbeamertemplate{itemize item}{\Large$\bullet$}
@@ -207,8 +270,21 @@
 % description
 \setbeamercolor{description item}{fg=LabIAblue}
 
+% tableofcontents
+\setbeamercolor{section in toc}{fg=LabIAblue}
+
 % Nome das legendas
 \setbeamercolor{caption name}{fg=LabIAblue}
+
+
+% ===== Links =====
+\hypersetup{
+    colorlinks=true,
+    linkcolor=.,
+    urlcolor=LabIAblue,
+    %citecolor=LabIAblue
+}
+
 
 % ===== Blocos =====
 
@@ -221,9 +297,11 @@
 \@configblock[ alerted]{FireBrick}
 \@configblock[ example]{Green}
 
+
 % ===== Botões =====
 
 \setbeamercolor{button}{fg=white,bg=LabIAblue}
+
 
 % ===== Definição das fontes =====
 
