@@ -19,8 +19,14 @@
 \newbool{pagenumber}
 \setbool{pagenumber}{true}
 
+% Usa o tema branco para a barra lateral e o fundo
+% dos slides de título e cabeçalho de seção (padrão: false)
+\newbool{white}
+\setbool{white}{false}
+
 \DeclareOptionBeamer{titlepagenumber}{\setbool{titlepagenumber}{true}}
 \DeclareOptionBeamer{nopagenumber}{\setbool{pagenumber}{false}}
+\DeclareOptionBeamer{white}{\setbool{white}{true}}
 \ProcessOptionsBeamer
 
 
@@ -29,10 +35,11 @@
 \setbeamertemplate{navigation symbols}{}
 \newlength{\sidebarwidth}
 \setlength{\sidebarwidth}{15mm}
-\newcommand{\sidebarimage}{logo.pdf}
+\newcommand{\sidebarimage}{\ifbool{white}{logo_white.pdf}{logo.pdf}}
 \newcommand{\fmtpage}[2]{\makebox[1.5em][#1]{#2}}
 \definecolor{LabIAblue}{RGB}{62,81,149}
-%\definecolor{LabIAblue}{RGB}{255,81,149}
+\colorlet{primary}{\ifbool{white}{white}{LabIAblue}}
+\colorlet{secondary}{\ifbool{white}{LabIAblue}{white}}
 
 
 % ===== Barra lateral =====
@@ -45,12 +52,12 @@
 
 \setbeamertemplate{background}{
 \begin{tikzpicture}[remember picture,overlay]
-    \fill[LabIAblue] % Barra lateral
+    \fill[primary] % Barra lateral
         ($(current page.north east)+(-\sidebarwidth,0)$)
         rectangle
         (current page.south east);
 
-    \draw[white, line width=0.5mm] % Linha central da barra lateral
+    \draw[secondary, line width=0.5mm] % Linha central da barra lateral
         ($(current page.north east)+(-0.5*\sidebarwidth,-23mm)$)
         --
         ($(current page.south east)+(-0.5*\sidebarwidth,2mm)$);
@@ -69,8 +76,8 @@
     }{
         \node[
             anchor=south,
-            text=white,
-            fill=LabIAblue,
+            text=secondary,
+            fill=primary,
             inner ysep=2mm,
             font=\small
         ] at ($(current page.south east)+(-0.5*\sidebarwidth,0)$)
@@ -89,7 +96,7 @@
 % ===== Página de título =====
 
 \def\ps@nav@titlepage{
-    \setbeamercolor{background canvas}{bg=LabIAblue}
+    \setbeamercolor{background canvas}{bg=primary}
     \@nameuse{ps@nav}
 }
 \setbeamertemplate{title page}{
@@ -98,11 +105,11 @@
     \begingroup
 
     % Cores das fontes
-    \setbeamercolor{title}{fg=white}
-    \setbeamercolor{subtitle}{fg=white}
-    \setbeamercolor{author}{fg=white}
-    \setbeamercolor{institute}{fg=white}
-    \setbeamercolor{date}{fg=white}
+    \setbeamercolor{title}{fg=secondary}
+    \setbeamercolor{subtitle}{fg=secondary}
+    \setbeamercolor{author}{fg=secondary}
+    \setbeamercolor{institute}{fg=secondary}
+    \setbeamercolor{date}{fg=secondary}
 
     % Tamanho das fontes
     \setbeamerfont{title}{size=\LARGE,series=\bfseries}
@@ -135,7 +142,7 @@
             
             % LINHA HORIZONTAL
             \begin{tikzpicture}
-            \draw[white,line width=1mm]
+            \draw[secondary,line width=1mm]
                 (0,0) -- (0.2\paperwidth,0);
             \end{tikzpicture}
             
@@ -186,8 +193,8 @@
         {\def\framesectionsubtitle{#2}}%
     %
     {%
-        \setbeamercolor{background canvas}{bg=LabIAblue}
-        \setbeamercolor{title}{fg=white}
+        \setbeamercolor{background canvas}{bg=primary}
+        \setbeamercolor{title}{fg=secondary}
         \setbeamerfont{title}{size=\LARGE}
         \setbeamerfont{subtitle}{size=\large}
         
