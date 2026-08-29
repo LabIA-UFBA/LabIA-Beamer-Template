@@ -12,67 +12,60 @@
 % ===== Opções =====
 
 % A numeração da página deve aparecer na página de título (padrão: false)
-\newbool{titlepagenumber}
-\setbool{titlepagenumber}{false}
+\newbool{@titlepagenumber}
+\setbool{@titlepagenumber}{false}
 
 % As páginas devem ser numeradas (padrão: true)
-\newbool{pagenumber}
-\setbool{pagenumber}{true}
+\newbool{@pagenumber}
+\setbool{@pagenumber}{true}
 
 % Usa o tema branco para a barra lateral e o fundo
 % dos slides de título e cabeçalho de seção (padrão: false)
-\newbool{white}
-\setbool{white}{false}
+\newbool{@white}
+\setbool{@white}{false}
 
-\DeclareOptionBeamer{titlepagenumber}{\setbool{titlepagenumber}{true}}
-\DeclareOptionBeamer{nopagenumber}{\setbool{pagenumber}{false}}
-\DeclareOptionBeamer{white}{\setbool{white}{true}}
+\DeclareOptionBeamer{titlepagenumber}{\setbool{@titlepagenumber}{true}}
+\DeclareOptionBeamer{nopagenumber}{\setbool{@pagenumber}{false}}
+\DeclareOptionBeamer{white}{\setbool{@white}{true}}
 \ProcessOptionsBeamer
 
 
 % ===== Definições =====
 
 \setbeamertemplate{navigation symbols}{}
-\newlength{\sidebarwidth}
-\setlength{\sidebarwidth}{15mm}
-\newcommand{\sidebarimage}{\ifbool{white}{logo_white.pdf}{logo.pdf}}
-\newcommand{\fmtpage}[2]{\makebox[1.5em][#1]{#2}}
+\newlength{\@sidebarwidth}
+\setlength{\@sidebarwidth}{15mm}
+\newcommand{\@sidebarimage}{\ifbool{@white}{logo_white.pdf}{logo.pdf}}
+\newcommand{\@fmtpage}[2]{\makebox[1.5em][#1]{#2}}
 \definecolor{LabIAblue}{RGB}{62,81,149}
-\colorlet{primary}{\ifbool{white}{white}{LabIAblue}}
-\colorlet{secondary}{\ifbool{white}{LabIAblue}{white}}
+\colorlet{primary}{\ifbool{@white}{white}{LabIAblue}}
+\colorlet{secondary}{\ifbool{@white}{LabIAblue}{white}}
 
 
 % ===== Barra lateral =====
 
-% \newbool{istitlepage}
-% \setbool{istitlepage}{true}
-% \def\settitlepage{\setbool{istitlepage}{false}}
-% \AddToHook{env/frame/begin}{\setbool{istitlepage}{true}}
-% \BeforeBeginEnvironment{frame}{\setbool{istitlepage}{true}}
-
 \setbeamertemplate{background}{
 \begin{tikzpicture}[remember picture,overlay]
     \fill[primary] % Barra lateral
-        ($(current page.north east)+(-\sidebarwidth,0)$)
+        ($(current page.north east)+(-\@sidebarwidth,0)$)
         rectangle
         (current page.south east);
 
     \draw[secondary, line width=0.5mm] % Linha central da barra lateral
-        ($(current page.north east)+(-0.5*\sidebarwidth,-23mm)$)
+        ($(current page.north east)+(-0.5*\@sidebarwidth,-23mm)$)
         --
-        ($(current page.south east)+(-0.5*\sidebarwidth,2mm)$);
+        ($(current page.south east)+(-0.5*\@sidebarwidth,2mm)$);
     
     \node[anchor=north east, inner sep=0, xshift=-0.5mm, yshift=-1mm] % Logo do LabIA
         at (current page.north east)
-        {\includegraphics[width=\dimexpr\sidebarwidth-1mm\relax]{\sidebarimage}};
+        {\includegraphics[width=\dimexpr\@sidebarwidth-1mm\relax]{\@sidebarimage}};
     
     \ifboolexpr{ % Numeração de página
-        bool {pagenumber}
+        bool {@pagenumber}
         and
-        ( bool {titlepagenumber}
+        ( bool {@titlepagenumber}
         or
         test {\ifnumcomp{\value{page}}{>}{1}} )
-        %bool {istitlepage} )
     }{
         \node[
             anchor=south,
@@ -80,15 +73,15 @@
             fill=primary,
             inner ysep=2mm,
             font=\small
-        ] at ($(current page.south east)+(-0.5*\sidebarwidth,0)$)
-        {\fmtpage{r}{\insertframenumber}/\fmtpage{l}{\inserttotalframenumber}};
+        ] at ($(current page.south east)+(-0.5*\@sidebarwidth,0)$)
+        {\@fmtpage{r}{\insertframenumber}/\@fmtpage{l}{\inserttotalframenumber}};
     }{}
 \end{tikzpicture}
 }
 
 % Ajustar conteúdo com a barra lateral (apenas em slides não-titlepage)
 \setbeamersize{
-    text margin right=\dimexpr\sidebarwidth+0.5cm\relax,
+    text margin right=\dimexpr\@sidebarwidth+0.5cm\relax,
     text margin left=7mm
 }
 
@@ -121,7 +114,7 @@
     % Layout da página
     \begin{center}
         %\settitlepage
-        \hspace*{\dimexpr(\sidebarwidth+0.5cm)/2\relax}%
+        \hspace*{\dimexpr(\@sidebarwidth+0.5cm)/2\relax}%
         \begin{minipage}[c][0.9\paperheight]{0.75\paperwidth}
             \centering
             % TÍTULO
@@ -201,7 +194,7 @@
         \begin{frame}
             %\settitlepage
             \begin{center}
-                \hspace*{\dimexpr(\sidebarwidth+0.5cm)/2\relax}%
+                \hspace*{\dimexpr(\@sidebarwidth+0.5cm)/2\relax}%
                 \begin{minipage}[c][0.9\paperheight]{0.75\paperwidth}
                     \centering
                     
@@ -227,7 +220,6 @@
 % ===== Título e subtítulo das páginas =====
 
 \setbeamerfont{frametitle}{
-  %size=\LARGE,
   series=\bfseries
 }
 
@@ -236,7 +228,6 @@
 }
 
 \setbeamerfont{framesubtitle}{
-  %size=\normalsize,
   series=\mdseries
 }
 
@@ -288,8 +279,7 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=.,
-    urlcolor=LabIAblue,
-    %citecolor=LabIAblue
+    urlcolor=LabIAblue
 }
 
 
