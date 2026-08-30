@@ -1,6 +1,6 @@
 # LabIA Beamer Template
 
-Tema [Beamer](https://ctan.org/pkg/beamer) com a identidade visual do **LabIA**.
+Template [Beamer](https://ctan.org/pkg/beamer) para apresentações de slides com a identidade visual do **LabIA**.
 
 ---
 
