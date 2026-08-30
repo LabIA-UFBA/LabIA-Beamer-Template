@@ -4,21 +4,24 @@ Template [Beamer](https://ctan.org/pkg/beamer) para apresentações de slides co
 
 ---
 
-## Sumário
 
-- [Como usar](#como-usar)
-  - [No Overleaf](#no-overleaf)
-  - [Uso local](#uso-local)
-- [Proporção do documento (16:9)](#proporção-do-documento-169)
-- [Opções do tema](#opções-do-tema)
-- [Cabeçalhos de seção](#cabeçalhos-de-seção)
-- [Compilação](#compilação)
-- [Documento de exemplo](#documento-de-exemplo)
-- [Capturas de tela](#capturas-de-tela)
+## 📑 Sumário
+
+- [📖 Como usar](#como-usar)
+  - [🍃 No Overleaf](#overleaf)
+  - [🖥️ Uso local](#uso-local)
+- [🎨 Opções do tema](#opcoes-tema)
+- [🚩 Cabeçalhos de seção](#cabecalhos-secao)
+- [🛠️ Compilação](#compilacao)
+- [💡 Documento de exemplo](#documento-exemplo)
+- [📸 Capturas de tela](#capturas-tela)
 
 ---
 
-## Como usar
+
+<div id="como-usar"></div>
+
+## 📖 Como usar 
 
 Para usar o tema, basta colocar os arquivos dele na mesma pasta em que está o seu documento `.tex` e carregá-lo com `\usetheme{LabIA}`. Os arquivos necessários são:
 
@@ -57,7 +60,10 @@ Veja abaixo um exemplo de uso do template no seu documento:
 >
 > Por mais que tenha sido desenhado para 16:9, o template também funciona bem com a proporção padrão do beamer (4:3).
 
-### No Overleaf
+
+<div id="overleaf"></div>
+
+### 🍃 No Overleaf
 
 1. Crie um novo projeto em [overleaf.com](https://www.overleaf.com) (*New Project* → *Blank Project* ou importe o repositório via GitHub);
 2. Faça o upload de `beamerthemeLabIA.sty`, `logo.pdf`, `logo_white.pdf` e do seu documento `.tex` para a raiz do projeto;
@@ -65,15 +71,20 @@ Veja abaixo um exemplo de uso do template no seu documento:
 
 > Se preferir começar do zero, você também pode **fazer uma cópia** do template já no Overleaf e usá-la como ponto de partida — sem precisar subir os arquivos manualmente. [Clique aqui para acessar o template](https://pt.overleaf.com/read/bgffkxtjrcjd#258378) e, em seguida, clique em "Menu" → "Make a copy".
 
-### Uso local
+
+<div id="uso-local"></div>
+
+### 🖥️ Uso local
 
 1. Copie `beamerthemeLabIA.sty`, `logo.pdf` e `logo_white.pdf` para a pasta do seu documento;
 2. Crie o seu documento `.tex` como o preâmbulo acima e compile-o (veja [Compilação](#compilação)).
 
-
 ---
 
-## Opções do tema
+
+<div id="opcoes-tema"></div>
+
+## 🎨 Opções do tema 
 
 As opções são passadas entre colchetes em `\usetheme`:
 
@@ -90,7 +101,10 @@ As opções são passadas entre colchetes em `\usetheme`:
 
 ---
 
-## Cabeçalhos de seção
+
+<div id="cabecalhos-secao"></div>
+
+## 🚩 Cabeçalhos de seção
 
 Para criar um slide de seção com o layout padronizado do tema (fundo colorido, título centralizado), use o comando **`\framesection`**, definido pelo próprio tema. Ele aceita um título e um subtítulo opcionais:
 
@@ -105,7 +119,10 @@ Imagens do cabeçalho de seção podem ser vistas em [Capturas de tela](#captura
 
 ---
 
-## Compilação
+
+<div id="compilacao"></div>
+
+## 🛠️ Compilação
 
 O tema funciona com qualquer motor LaTeX (`pdflatex`, `xelatex` ou `lualatex`), sem configuração adicional. Com bibliografia (BibTeX), a sequência completa é `pdflatex → bibtex → pdflatex → pdflatex`. Usando `latexmk`, a sequência é resolvida automaticamente:
 
@@ -124,7 +141,10 @@ pdflatex main.tex
 
 ---
 
-## Documento de exemplo
+
+<div id="documento-exemplo"></div>
+
+## 💡 Documento de exemplo
 
 O arquivo [`example.tex`](example.tex) demonstra todos os recursos do tema em um único documento: página de título, sumário (`\tableofcontents`), siglas, cabeçalhos de seção, listas, colunas com citações, figuras, tabelas, blocos, fórmulas, código e referências bibliográficas.
 
@@ -132,7 +152,10 @@ O PDF compilado, [`example.pdf`](example.pdf), pode ser usado como referência v
 
 ---
 
-## Capturas de tela
+
+<div id="capturas-tela"></div>
+
+## 📸 Capturas de tela
 
 | Página de título | Página de título (white) |
 | --- | --- |
