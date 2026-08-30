@@ -40,6 +40,7 @@
 \definecolor{LabIAblue}{RGB}{62,81,149}
 \colorlet{primary}{\ifbool{@white}{white}{LabIAblue}}
 \colorlet{secondary}{\ifbool{@white}{LabIAblue}{white}}
+\renewcommand{\familydefault}{phv}
 
 
 % ===== Barra lateral =====
@@ -298,34 +299,3 @@
 % ===== Botões =====
 
 \setbeamercolor{button}{fg=white,bg=LabIAblue}
-
-
-% ===== Definição das fontes =====
-
-\newcommand{\@setfont}{
-    \RequirePackage{fontspec}
-    \IfFontExistsTF{Arial}{
-        \setmainfont{Arial}
-        \setsansfont{Arial}
-    }{
-        \IfFontExistsTF{Liberation Sans}{
-            \setmainfont{Liberation Sans}
-            \setsansfont{Liberation Sans}
-        }{
-            \renewcommand{\familydefault}{phv}
-        }
-    }
-}
-
-\ifxetex
-    \@setfont
-\else
-    \RequirePackage{ifluatex}
-    \ifLuaTeX
-        \@setfont
-    \else
-        \RequirePackage[utf8]{inputenc}
-        \RequirePackage[T1]{fontenc}
-        \renewcommand{\familydefault}{phv}
-    \fi
-\fi
