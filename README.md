@@ -115,7 +115,7 @@ Para criar um slide de seção com o layout padronizado do tema (fundo colorido,
 | `\framesection{}{Subtítulo}` | Título da seção atual + subtítulo |
 | `\framesection{Título}{Subtítulo}` | Título e subtítulo personalizados |
 
-Imagens do cabeçalho de seção podem ser vistas em [Capturas de tela](#capturas-de-tela) e no [documento de exemplo](#documento-de-exemplo).
+Imagens do cabeçalho de seção podem ser vistas em [Capturas de tela](#capturas-tela) e no [documento de exemplo](#documento-exemplo).
 
 ---
 
