@@ -6,6 +6,7 @@
     %nopagenumber,
     %white,
 ]{LabIA}
+\setbeamercovered{transparent}
 
 \title{Exemplo de apresentação}
 \subtitle{com template LabIA}
@@ -163,6 +164,23 @@
     \\tableofcontents
 \\end\{frame\}
     \end{semiverbatim}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overlays}
+    \begin{theorem}
+        There is no largest prime number.
+    \end{theorem}
+    \begin{proof}
+        \begin{enumerate}
+            \item<1-| alert@1> Suppose $p$ were the largest prime number.
+            \item<2-> Let $q$ be the product of the first $p$ numbers.\footnotemark[1]
+            \item<3-> Then $q+1$ is not divisible by any of them.\footnotemark[1]
+            \item<1-> Thus $q+1$ is also prime and greater than $p$.
+        \end{enumerate}
+    \end{proof}
+
+    \footnotetext{Os \textit{overlays} 2 e 3 só aparecem aparecem esmaecidos devido à presença do \texttt{\textbackslash setbeamercovered\{transparent\}} no documento. O comportamento padrão é a ocultação.}
 \end{frame}
 
 \begin{frame}
