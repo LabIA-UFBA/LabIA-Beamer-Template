@@ -146,9 +146,9 @@ pdflatex main.tex
 
 ## 💡 Documento de exemplo
 
-O arquivo [`example.tex`](example.tex) demonstra todos os recursos do tema em um único documento: página de título, sumário (`\tableofcontents`), siglas, cabeçalhos de seção, listas, colunas com citações, figuras, tabelas, blocos, fórmulas, código e referências bibliográficas.
+O documento de exemplo na pasta [`example`](example/) demonstra todos os recursos do tema em um único documento: página de título, sumário (`\tableofcontents`), siglas, cabeçalhos de seção, listas, colunas com citações, figuras, tabelas, blocos, fórmulas, código e referências bibliográficas.
 
-O PDF compilado, [`example.pdf`](example.pdf), pode ser usado como referência visual. As capturas de tela a seguir foram obtidas a partir do documento de exemplo.
+O PDF compilado ([`example.pdf`](example/example.pdf)) pode ser usado como referência visual. As capturas de tela a seguir foram obtidas a partir deste documento.
 
 ---
 
@@ -172,5 +172,7 @@ O PDF compilado, [`example.pdf`](example.pdf), pode ser usado como referência v
 | Figura e legenda | Blocos |
 | --- | --- |
 | ![Figura e legenda](screenshots/figura.png) | ![Blocos](screenshots/blocos.png) |
+
+Mais exemplos visuais podem ser encontrados no [documento de exemplo](#documento-exemplo).
 
 ---
